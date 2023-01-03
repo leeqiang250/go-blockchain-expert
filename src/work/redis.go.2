@@ -1,0 +1,12 @@
+package work
+
+import (
+	"github.com/go-redis/redis"
+	"github.com/leeqiang250/golang/src/test"
+)
+
+func InitRedis(addr []string, password string) {
+	opt := &redis.ClusterOptions{Addrs: addr, Password: password}
+	redis.NewClusterClient(opt)
+	test.Test0()
+}
