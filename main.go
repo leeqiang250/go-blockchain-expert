@@ -45,6 +45,8 @@ func cc(data []int) {
 }
 
 func main() {
+	test4()
+
 	ethereum_test.Start()
 
 	data := make([]int, 0, 10)
@@ -178,4 +180,31 @@ func test3() {
 	}()
 
 	time.Sleep(time.Hour)
+}
+
+func test4() {
+	var disc = make(chan int64, 20)
+	var closed = make(chan int64, 20)
+
+	disc <- 1
+	disc <- 1
+	disc <- 1
+
+	closed <- 1
+	closed <- 1
+	closed <- 1
+
+	fmt.Println("1")
+	select {
+	case result, ok := <-disc:
+		{
+			fmt.Println("disc", result, ok)
+		}
+	case result, ok := <-closed:
+		{
+			fmt.Println("closed", result, ok)
+		}
+	}
+	fmt.Println("2")
+
 }
