@@ -389,13 +389,14 @@ func test6() {
 var feePayer, _ = types.AccountFromBase58("4ukSnzryvAVU98uDGQTXgTgfhxiN7uLZ5t21bBvvyRQAL8enozLmZYZHPBLRbdkj6xesnzkwYy2pWYDxxLPiTwfY")
 
 // 9aE476sH92Vz7DMPyq5WLPkrKWivxeuTKEFKd2sZZcde
-var alice, _ = types.AccountFromBase58("4ukSnzryvAVU98uDGQTXgTgfhxiN7uLZ5t21bBvvyRQAL8enozLmZYZHPBLRbdkj6xesnzkwYy2pWYDxxLPiTwfY")
+//var alice, _ = types.AccountFromBase58("4ukSnzryvAVU98uDGQTXgTgfhxiN7uLZ5t21bBvvyRQAL8enozLmZYZHPBLRbdkj6xesnzkwYy2pWYDxxLPiTwfY")
 
 var mintPubkey = common.PublicKeyFromString("Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB") //
 
 var aliceTokenRandomTokenPubkey = common.PublicKeyFromString("7yLhAmGMMJvqDzyN13WjUVK1VRoZusqvA3UUnMvFWcek") //
 
-var aliceTokenATAPubkey = common.PublicKeyFromString("9nj6jK69KGU38q1G5wC822MpMMMryUyhAMyzTFLbtmV") //
+//var aliceTokenATAPubkey = common.PublicKeyFromString("9nj6jK69KGU38q1G5wC822MpMMMryUyhAMyzTFLbtmV") //
+var aliceTokenATAPubkey = common.PublicKeyFromString("7VhJLc53PH2T17sS46qHDaCYCR7ZcRSdPPpjNApjiJTh") //
 
 func test7() {
 	//fmt.Println("from", aliceTokenRandomTokenPubkey.ToBase58())
@@ -415,19 +416,47 @@ func test7() {
 		log.Fatalf("get recent block hash error, err: %v\n", err)
 	}
 
+	//tx, err := types.NewTransaction(types.NewTransactionParam{
+	//	Message: types.NewMessage(types.NewMessageParam{
+	//		FeePayer:        feePayer.PublicKey,
+	//		RecentBlockhash: res.Blockhash,
+	//		Instructions: []types.Instruction{
+	//			token.TransferChecked(token.TransferCheckedParam{
+	//				From:     aliceTokenRandomTokenPubkey,
+	//				To:       aliceTokenATAPubkey,
+	//				Mint:     mintPubkey,
+	//				Auth:     feePayer.PublicKey,
+	//				Signers:  []common.PublicKey{},
+	//				Amount:   1,
+	//				Decimals: 6,
+	//			}),
+	//		},
+	//	}),
+	//	Signers: []types.Account{feePayer},
+	//})
+	//if err != nil {
+	//	log.Fatalf("failed to new tx, err: %v", err)
+	//}
+	//
+	//txhash, err := c.SendTransaction(context.Background(), tx)
 	tx, err := types.NewTransaction(types.NewTransactionParam{
 		Message: types.NewMessage(types.NewMessageParam{
 			FeePayer:        feePayer.PublicKey,
 			RecentBlockhash: res.Blockhash,
 			Instructions: []types.Instruction{
-				token.TransferChecked(token.TransferCheckedParam{
-					From:     aliceTokenRandomTokenPubkey,
-					To:       aliceTokenATAPubkey,
-					Mint:     mintPubkey,
-					Auth:     alice.PublicKey,
-					Signers:  []common.PublicKey{},
-					Amount:   1,
-					Decimals: 6,
+				token.Transfer(token.TransferParam{
+					From:    aliceTokenRandomTokenPubkey,
+					To:      aliceTokenATAPubkey,
+					Auth:    feePayer.PublicKey,
+					Signers: []common.PublicKey{},
+					Amount:  222222,
+					//From:     aliceTokenRandomTokenPubkey,
+					//To:       aliceTokenATAPubkey,
+					//Mint:     mintPubkey,
+					//Auth:     feePayer.PublicKey,
+					//Signers:  []common.PublicKey{},
+					//Amount:   1,
+					//Decimals: 6,
 				}),
 			},
 		}),
