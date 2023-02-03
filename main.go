@@ -473,3 +473,7 @@ func test7() {
 
 	log.Println("txhash:", txhash)
 }
+
+func test8() {
+
+}
