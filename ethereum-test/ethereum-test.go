@@ -16,6 +16,13 @@ import (
 )
 
 func Start() {
+	{
+		var token = common.HexToAddress("0x9364e119AD76e0346126aFcbDF5C9f0189500Cc5")
+		fmt.Println(token)
+		token = common.HexToAddress("0x9364e119AD76e0346126aFcbDF5C9f0189500Cc6")
+		fmt.Println(token)
+
+	}
 	step4()
 	step3()
 	step2()
