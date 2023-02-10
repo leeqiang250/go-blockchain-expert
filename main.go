@@ -63,7 +63,24 @@ func cc(data []int) {
 	fmt.Println(len(data))
 }
 
+var Client *redis.Client
+
 func main() {
+
+	Client = redis.NewClient(&redis.Options{
+		Addr:     "localhost:32768",
+		Username: "default",
+		Password: "redispw", // no password set
+		DB:       0,         // use default DB
+	})
+
+	go src.NewTaskRedis(Client, "if (redis.call('get', KEYS[1]) == ARGV[1]) then redis.call('expire', KEYS[1], ARGV[2]) return 1 else if (1 == redis.call('setnx', KEYS[1], ARGV[1])) then redis.call('expire', KEYS[1], ARGV[2]) return 1 else return 0 end return 0 end", time.Second, "keyUniqueName", "nodeUniqueName", func() {
+		fmt.Println("nodeUniqueName")
+	}).Run()
+
+	src.NewTaskRedis(Client, "if (redis.call('get', KEYS[1]) == ARGV[1]) then redis.call('expire', KEYS[1], ARGV[2]) return 1 else if (1 == redis.call('setnx', KEYS[1], ARGV[1])) then redis.call('expire', KEYS[1], ARGV[2]) return 1 else return 0 end return 0 end", time.Second, "keyUniqueName", "nodeUniqueName2", func() {
+		fmt.Println("nodeUniqueName2")
+	}).Run()
 
 	src.XXX()
 
