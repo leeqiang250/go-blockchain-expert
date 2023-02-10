@@ -65,6 +65,8 @@ func cc(data []int) {
 
 func main() {
 
+	src.XXX()
+
 	ethereum_test.Start()
 	//src.Test()
 
