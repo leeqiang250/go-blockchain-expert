@@ -1,7 +1,22 @@
 package src
 
+import "math"
+
 func InitSymbol(symbol string, marketTrade *MarketTrade, marketTicker *MarketTicker, marketLines map[LineScale]*MarketLine) {
-	var offset = int64(0)
+	var offset = uint64(math.MaxUint16)
+
+	if nil != marketTrade {
+		offset = Min(offset, marketTrade.Offset)
+	}
+	if nil != marketTicker {
+		offset = Min(offset, marketTrade.Offset)
+	}
+	for _, marketLine := range marketLines {
+		offset = Min(offset, marketLine.Offset)
+	}
+	if offset == uint64(math.MaxUint16) {
+		offset = 0
+	}
 
 	var persistentTrade = NewPersistentTrade(symbol)
 	go persistentTrade.Start()
@@ -35,4 +50,8 @@ func InitSymbol(symbol string, marketTrade *MarketTrade, marketTicker *MarketTic
 	var receiveMsg = NewReceiveMsg(symbol, offset)
 	receiveMsg.Output(match.Input)
 	go receiveMsg.Start()
+}
+
+func InitTickers() {
+
 }

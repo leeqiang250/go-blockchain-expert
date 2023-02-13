@@ -3,7 +3,7 @@ package src
 type ReceiveMsg struct {
 }
 
-func NewReceiveMsg(symbol string, offset int64) *ReceiveMsg {
+func NewReceiveMsg(symbol string, offset uint64) *ReceiveMsg {
 	return &ReceiveMsg{}
 }
 
