@@ -12,12 +12,10 @@ func NewPersistentTicker(symbol string) *PersistentTicker {
 
 func (this *PersistentTicker) Start() error {
 	for {
-		var marketTicker *MarketTicker
-		for 0 < len(this.input) {
-			marketTicker = <-this.input
+		for 1 < len(this.input) {
+			<-this.input
 		}
-		
-		SyncTicker(this.symbol, marketTicker)
+		SyncMarketTicker(this.symbol, <-this.input)
 	}
 }
 
@@ -30,11 +28,4 @@ func (this *PersistentTicker) Input(data interface{}) {
 }
 
 func (this *PersistentTicker) Output(output func(data interface{})) {
-}
-
-func (this *PersistentTicker) next(data interface{}) {
-	var output func(data interface{})
-	for _, output = range this.outputs {
-		output(data)
-	}
 }

@@ -1,6 +1,7 @@
 package src
 
 type PersistentLine struct {
+	symbol  string
 	input   chan *MarketLine
 	outputs []func(data interface{})
 }
@@ -10,7 +11,23 @@ func NewPersistentLine(symbol string, lineScale LineScale, marketLine *MarketLin
 }
 
 func (this *PersistentLine) Start() error {
-	return nil
+	var cache = make(map[uint64]*MarketLine, 2)
+	for {
+		var marketLine *MarketLine
+		for 1 < len(this.input) {
+			marketLine = <-this.input
+			cache[marketLine.ID] = marketLine
+		}
+
+		marketLine = <-this.input
+		cache[marketLine.ID] = marketLine
+
+		for _, marketLine = range cache {
+			SyncMarketLine(this.symbol, marketLine)
+			cache[marketLine.ID] = nil
+			delete(cache, marketLine.ID)
+		}
+	}
 }
 
 func (this *PersistentLine) Stop() error {
@@ -22,11 +39,4 @@ func (this *PersistentLine) Input(data interface{}) {
 }
 
 func (this *PersistentLine) Output(output func(data interface{})) {
-}
-
-func (this *PersistentLine) next(data interface{}) {
-	var output func(data interface{})
-	for _, output = range this.outputs {
-		output(data)
-	}
 }

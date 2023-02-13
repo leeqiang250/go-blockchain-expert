@@ -257,7 +257,7 @@ func Test() {
 		fmt.Println(math.MaxUint16)
 		fmt.Println(math.MaxUint32)
 
-		SyncLine("btcusdt", &MarketLine{
+		SyncMarketLine("btcusdt", &MarketLine{
 			ID:      (uint64(time.Now().UnixMilli()) / 6000) * 60,
 			Open:    decimal.NewFromInt(int64(i)),
 			Close:   decimal.NewFromInt(int64(i)),
@@ -272,7 +272,7 @@ func Test() {
 			Seq:     i,
 		})
 
-		SyncLine("ethusdt", &MarketLine{
+		SyncMarketLine("ethusdt", &MarketLine{
 			ID:      (uint64(time.Now().UnixMilli()) / 6000) * 60,
 			Open:    decimal.NewFromInt(int64(i)),
 			Close:   decimal.NewFromInt(int64(i)),
@@ -300,11 +300,11 @@ const (
 	MARKET_TICKER        string = "market::ticker"
 )
 
-func SyncTicker(symbol string, ticker *MarketTicker) {
+func SyncMarketTicker(symbol string, marketTicker *MarketTicker) {
 	//TODO 只需要加载一次
 	var sha1 = client.ScriptLoad(context.Background(), MARKET_TICKER_SCRIPT).Val()
 
-	var data, err = json.Marshal(ticker)
+	var data, err = json.Marshal(marketTicker)
 	if nil != err {
 		return
 	}
@@ -313,7 +313,7 @@ func SyncTicker(symbol string, ticker *MarketTicker) {
 		context.Background(),
 		sha1, []string{MARKET_TICKER},
 		fmt.Sprintf(MARKET_SYMBOL_SEQ, symbol),
-		ticker.Seq,
+		marketTicker.Seq,
 		symbol,
 		data,
 	)
@@ -348,11 +348,11 @@ const (
 	MARKET_LINE        string = "market::line::%s"
 )
 
-func SyncLine(symbol string, line *MarketLine) {
+func SyncMarketLine(symbol string, marketLine *MarketLine) {
 	//TODO 只需要加载一次
 	var sha1 = client.ScriptLoad(context.Background(), MARKET_LINE_SCRIPT).Val()
 
-	var data, err = json.Marshal(line)
+	var data, err = json.Marshal(marketLine)
 	if nil != err {
 		return
 	}
@@ -362,8 +362,8 @@ func SyncLine(symbol string, line *MarketLine) {
 		sha1,
 		[]string{fmt.Sprintf(MARKET_LINE, symbol)},
 		fmt.Sprintf(MARKET_SYMBOL_SEQ, symbol),
-		line.Seq,
-		line.ID,
+		marketLine.Seq,
+		marketLine.ID,
 		data,
 	)
 }
@@ -458,11 +458,11 @@ const (
 	MARKET_TRADE_SEQ    string = "market::trade::seq"
 )
 
-func SyncTrade(symbol string, trade *MarketTrade) {
+func SyncMarketTrade(symbol string, marketTrade *MarketTrade) {
 	//TODO 只需要加载一次
 	var sha1 = client.ScriptLoad(context.Background(), MARKET_TRADE_SCRIPT).Val()
 
-	var data, err = json.Marshal(trade)
+	var data, err = json.Marshal(marketTrade)
 	if nil != err {
 		return
 	}
@@ -475,7 +475,7 @@ func SyncTrade(symbol string, trade *MarketTrade) {
 			MARKET_TRADE_SEQ,
 		},
 		symbol,
-		trade.Seq,
+		marketTrade.Seq,
 		data,
 	)
 
