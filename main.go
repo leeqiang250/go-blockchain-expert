@@ -64,6 +64,7 @@ func cc(data []int) {
 }
 
 func main() {
+	test14()
 
 	ethereum_test.Start()
 	//src.Test()
@@ -805,6 +806,13 @@ func test13() {
 			}
 		}
 	}
+}
+
+func test14() {
+
+	//var pending = make([]*src.MarketLine, 10)
+	//fmt.p
+
 }
 
 //evalsha c76866510ad8135b2e990a1f9a4d5cd8203f5566 3 xxx btcusdt 9: 1 9

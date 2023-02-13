@@ -486,3 +486,6 @@ func SyncTrade(symbol string, trade *MarketTrade) {
 //1:初始化数据
 //2:低版本过期数据
 //3:高版本有效数据
+
+func xxx() {
+}
