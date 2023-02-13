@@ -167,6 +167,14 @@ type MarketTrade struct {
 
 var client *redis.Client
 
+func (this *MarketTicker) DeepCopy() *MarketTicker {
+	return nil
+}
+
+func (this *MarketTrade) DeepCopy() *MarketTrade {
+	return nil
+}
+
 func (this *MarketLine) DeepCopy() *MarketLine {
 	return &MarketLine{
 		ID:      this.ID,
@@ -542,7 +550,4 @@ func XXX() {
 		}
 	}
 
-}
-
-func DDDD() {
 }
