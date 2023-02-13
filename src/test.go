@@ -167,6 +167,22 @@ type MarketTrade struct {
 
 var client *redis.Client
 
+func (this *MarketLine) DeepCopy() *MarketLine {
+	return &MarketLine{
+		ID:      this.ID,
+		Open:    this.Open,
+		Close:   this.Close,
+		High:    this.High,
+		Low:     this.Low,
+		Vol:     this.Vol,
+		Amount:  this.Amount,
+		Count:   this.Count,
+		IsClose: this.IsClose,
+		Ts:      this.Ts,
+		Offset:  this.Offset,
+		Seq:     this.Seq,
+	}
+}
 func Test() {
 	client = redis.NewClient(&redis.Options{
 		Addr:     "localhost:32768",
@@ -487,5 +503,46 @@ func SyncTrade(symbol string, trade *MarketTrade) {
 //2:低版本过期数据
 //3:高版本有效数据
 
-func xxx() {
+func XXX() {
+	var data = &MarketLine{
+		ID:      0,
+		Open:    decimal.Zero,
+		Close:   decimal.Zero,
+		High:    decimal.Zero,
+		Low:     decimal.Zero,
+		Vol:     decimal.Zero,
+		Amount:  decimal.Zero,
+		Count:   0,
+		IsClose: false,
+		Ts:      0,
+		Offset:  0,
+		Seq:     0,
+	}
+	var ch = make(chan *MarketLine, 100)
+
+	go func() {
+		for {
+			data.Open = data.Open.Add(decimal.NewFromInt(1))
+			//time.Sleep(time.Second)
+			data.Close = data.Close.Add(decimal.NewFromInt(1))
+
+			ch <- data.DeepCopy()
+		}
+	}()
+
+	for {
+		var aa, _ = json.Marshal(<-ch)
+		var bb = &MarketLine{}
+		json.Unmarshal(aa, bb)
+
+		if bb.Open.Equal(bb.Close) {
+			fmt.Println(string(aa))
+		} else {
+			fmt.Println(string(aa))
+		}
+	}
+
+}
+
+func DDDD() {
 }
