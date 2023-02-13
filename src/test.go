@@ -167,6 +167,10 @@ type MarketTrade struct {
 
 var client *redis.Client
 
+func isExpire(ts uint64) bool {
+	return false
+}
+
 func (this *MarketTicker) DeepCopy() *MarketTicker {
 	return nil
 }
@@ -550,4 +554,8 @@ func XXX() {
 		}
 	}
 
+}
+
+func Now() uint64 {
+	return 2
 }

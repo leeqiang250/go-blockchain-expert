@@ -4,16 +4,16 @@ import (
 	"encoding/json"
 )
 
-type CalcMatchResult struct {
+type SerializeMatchResult struct {
 	input   chan []byte
 	outputs []func(data interface{})
 }
 
-func NewCalcMatchResult(symbol string) *CalcMatchResult {
-	return &CalcMatchResult{}
+func NewSerializeMatchResult(symbol string) *SerializeMatchResult {
+	return &SerializeMatchResult{}
 }
 
-func (this *CalcMatchResult) Start() error {
+func (this *SerializeMatchResult) Start() error {
 	for {
 		var matchResult = &MatchResult{}
 		var err = json.Unmarshal(<-this.input, matchResult)
@@ -23,19 +23,19 @@ func (this *CalcMatchResult) Start() error {
 	}
 }
 
-func (this *CalcMatchResult) Stop() error {
+func (this *SerializeMatchResult) Stop() error {
 	return nil
 }
 
-func (this *CalcMatchResult) Input(data interface{}) {
+func (this *SerializeMatchResult) Input(data interface{}) {
 	this.input <- data.([]byte)
 }
 
-func (this *CalcMatchResult) Output(output func(data interface{})) {
+func (this *SerializeMatchResult) Output(output func(data interface{})) {
 	this.outputs = append(this.outputs, output)
 }
 
-func (this *CalcMatchResult) next(data interface{}) {
+func (this *SerializeMatchResult) next(data interface{}) {
 	var output func(data interface{})
 	for _, output = range this.outputs {
 		output(data)

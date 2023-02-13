@@ -1,8 +1,9 @@
 package src
 
 type CalcTicker struct {
-	input   chan *MatchResult
-	outputs []func(data interface{})
+	marketTicker *MarketTicker
+	input        chan *MatchResult
+	outputs      []func(data interface{})
 }
 
 func NewCalcTicker(symbol string, marketTicker *MarketTicker) *CalcTicker {
@@ -10,6 +11,9 @@ func NewCalcTicker(symbol string, marketTicker *MarketTicker) *CalcTicker {
 }
 
 func (this *CalcTicker) Start() error {
+
+	this.next(this.marketTicker.DeepCopy())
+
 	return nil
 }
 

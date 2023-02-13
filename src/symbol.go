@@ -32,7 +32,7 @@ func InitSymbol(symbol string, marketTrade *MarketTrade, marketTicker *MarketTic
 	calcTicker.Output(persistentTicker.Input)
 	go calcTicker.Start()
 
-	var match = NewCalcMatchResult(symbol)
+	var match = NewSerializeMatchResult(symbol)
 	match.Output(calcTrade.Input)
 	match.Output(calcTicker.Input)
 	for lineScale, marketLine := range marketLines {
