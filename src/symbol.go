@@ -1,6 +1,8 @@
 package src
 
-import "math"
+import (
+	"math"
+)
 
 func InitSymbol(symbol string, marketTrade *MarketTrade, marketTicker *MarketTicker, marketLines map[LineScale]*MarketLine) {
 	var offset = uint64(math.MaxUint16)
@@ -47,11 +49,10 @@ func InitSymbol(symbol string, marketTrade *MarketTrade, marketTicker *MarketTic
 	}
 	go match.Start()
 
-	var receiveMsg = NewReceiveMsg(symbol, offset)
-	receiveMsg.Output(match.Input)
-	go receiveMsg.Start()
+	var pullMatchResult = NewPullMatchResult(symbol, offset)
+	pullMatchResult.Output(match.Input)
+	go pullMatchResult.Start()
 }
 
 func InitTickers() {
-
 }

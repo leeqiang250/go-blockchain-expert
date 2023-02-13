@@ -292,8 +292,9 @@ const (
 )
 
 const (
-	MARKET_TICKER_SCRIPT string = "local seq = redis.call('hget', KEYS[1], ARGV[1]) if (seq) then if (tonumber(ARGV[2]) > tonumber(seq)) then redis.call('hset', KEYS[1], ARGV[1], ARGV[2]) redis.call('hset', KEYS[1], ARGV[3], ARGV[4]) return 3 else return 2 end else redis.call('hset', KEYS[1], ARGV[1], ARGV[2]) redis.call('hset', KEYS[1], ARGV[3], ARGV[4]) return 1 end"
-	MARKET_TICKER        string = "market::ticker"
+	MARKET_TICKER_SCRIPT   string = "local seq = redis.call('hget', KEYS[1], ARGV[1]) if (seq) then if (tonumber(ARGV[2]) > tonumber(seq)) then redis.call('hset', KEYS[1], ARGV[1], ARGV[2]) redis.call('hset', KEYS[1], ARGV[3], ARGV[4]) return 3 else return 2 end else redis.call('hset', KEYS[1], ARGV[1], ARGV[2]) redis.call('hset', KEYS[1], ARGV[3], ARGV[4]) return 1 end"
+	MARKET_TICKER          string = "market::ticker"
+	MARKET_TICKER_PUSH_SEQ string = "market::ticker::push::seq"
 )
 
 func SyncMarketTicker(symbol string, marketTicker *MarketTicker) {
