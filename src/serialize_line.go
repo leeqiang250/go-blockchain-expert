@@ -1,6 +1,7 @@
 package src
 
 type SerializeLine struct {
+	cache   map[uint64]*MarketLine
 	input   chan *MarketLine
 	outputs []func(data interface{})
 }
@@ -10,10 +11,23 @@ func NewSerializeLine(symbol string, marketLine *MarketLine) *SerializeLine {
 }
 
 func (this *SerializeLine) Start() error {
+	var marketLine *MarketLine
 	for {
-		var marketLine = <-this.input
-		if !isExpire(marketLine.Ts) {
+		for 1 < len(this.input) {
+			marketLine = <-this.input
+			if !isExpire(marketLine.Ts) {
+				this.cache[marketLine.ID] = marketLine
+			}
+		}
 
+		marketLine = <-this.input
+		if !isExpire(marketLine.Ts) {
+			this.cache[marketLine.ID] = marketLine
+		}
+
+		for _, marketLine = range this.cache {
+			this.cache[marketLine.ID] = nil
+			delete(this.cache, marketLine.ID)
 		}
 	}
 }

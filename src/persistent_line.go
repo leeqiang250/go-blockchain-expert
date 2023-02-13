@@ -11,9 +11,9 @@ func NewPersistentLine(symbol string, lineScale LineScale, marketLine *MarketLin
 }
 
 func (this *PersistentLine) Start() error {
+	var marketLine *MarketLine
 	var cache = make(map[uint64]*MarketLine, 2)
 	for {
-		var marketLine *MarketLine
 		for 1 < len(this.input) {
 			marketLine = <-this.input
 			cache[marketLine.ID] = marketLine

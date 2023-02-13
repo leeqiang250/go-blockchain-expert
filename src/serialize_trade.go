@@ -13,7 +13,7 @@ func (this *SerializeTrade) Start() error {
 	for {
 		var marketTrade = <-this.input
 		if !isExpire(marketTrade.Ts) {
-
+			//TODO
 		}
 	}
 }

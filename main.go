@@ -66,6 +66,7 @@ func cc(data []int) {
 var Client *redis.Client
 
 func main() {
+	test15()
 	test14()
 
 	Client = redis.NewClient(&redis.Options{
@@ -853,3 +854,20 @@ func test14() {
 //evalsha 596c46727b8c2265cb7aee8d05acc7439013909b 3 xxx btcusdt 201: 1 201
 //evalsha 596c46727b8c2265cb7aee8d05acc7439013909b 3 xxx btcusdt 300: 1 300
 //evalsha 596c46727b8c2265cb7aee8d05acc7439013909b 3 xxx btcusdt 1300: 1 1300
+
+func test15() {
+	var map_ = make(map[int]interface{}, 2)
+
+	for 100 > len(map_) {
+		map_[len(map_)] = len(map_)
+	}
+
+	var k int
+	var v interface{}
+	for k, v = range map_ {
+		fmt.Println(k, v)
+		map_[k] = nil
+		delete(map_, k)
+	}
+	fmt.Println(map_)
+}
