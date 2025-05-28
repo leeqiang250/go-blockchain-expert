@@ -20,7 +20,7 @@ func NewCalcTickers(symbol string, marketTicker *MarketTicker) *CalcTickers {
 	var calcTickers = CalcTickers{}
 
 	calcTickers.pool, _ = ants.NewPoolWithFunc(10, func(i interface{}) {
-		calcTickers.myFunc(i)
+		//calcTickers.myFunc(i)
 		calcTickers.wg.Done()
 	})
 
