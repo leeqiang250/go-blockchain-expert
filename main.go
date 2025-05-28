@@ -66,6 +66,8 @@ func cc(data []int) {
 var Client *redis.Client
 
 func main() {
+	test16()
+
 	test15()
 	test14()
 
@@ -870,4 +872,60 @@ func test15() {
 		delete(map_, k)
 	}
 	fmt.Println(map_)
+}
+
+type I interface {
+	P()
+}
+
+type A struct {
+	name string
+}
+
+type B struct {
+	A
+}
+
+func (this A) Name() {
+	fmt.Println(this.name)
+}
+
+var task = make([]interface{}, 0)
+
+func test16() {
+	var ctx, cancel = context.WithCancel(context.Background())
+	var i uint64
+	for i < 32 {
+		i++
+
+		//var b = &B{}
+		//b.name = strconv.FormatUint(i, 10)
+		//b.Name()
+		//
+		//var a = &A{}
+		//a.name = strconv.FormatUint(i, 10)
+		//a.Name()
+		//
+		//task = append(task, b)
+		
+		go test17(ctx, i)
+	}
+	time.Sleep(time.Second * 5)
+
+	cancel()
+
+	time.Sleep(time.Hour * 5)
+}
+
+func test17(ctx context.Context, i uint64) {
+	defer func() {
+		fmt.Println("defer", i)
+	}()
+	for {
+		select {
+		case <-ctx.Done():
+			fmt.Println("Done", i)
+			return
+		}
+	}
 }
