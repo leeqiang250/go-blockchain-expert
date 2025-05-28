@@ -7,6 +7,7 @@ import (
 	"github.com/ethereum/go-ethereum/rpc"
 	"go-blockchain-expert/src"
 	"math/big"
+	"strconv"
 )
 
 func main() {
@@ -49,10 +50,10 @@ func main() {
 				alias:   "谭春花身份证",
 				address: "0x9273350B09A11dEa6b7a3A53CD4e2950605293D1",
 			}, {
-				alias:   "李  强身份证",
+				alias:   "李强身份证",
 				address: "0x05A53b212d9538B4C50fE1014204A34f3953f1b9",
 			}, {
-				alias:   "李  强护  照",
+				alias:   "李强护照",
 				address: "0x86356438e4CaF573637C3Ce20696b1758c7018Bc",
 			},
 		},
@@ -64,7 +65,13 @@ func main() {
 			panic(err)
 		}
 
-		fmt.Println(a.alias, b)
+		f, err := strconv.ParseFloat(b, 64)
+		if err != nil {
+			panic(err)
+		}
+
+		// 格式化为6位小数，自动四舍五入并补零
+		fmt.Println(a.alias, fmt.Sprintf("%.6f", f))
 	}
 }
 
