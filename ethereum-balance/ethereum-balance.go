@@ -73,6 +73,8 @@ func main() {
 		// 格式化为6位小数，自动四舍五入并补零
 		fmt.Println(a.alias, fmt.Sprintf("%.6f", f))
 	}
+
+	fmt.Println("成功")
 }
 
 func NewClient(host string) (*ethclient.Client, error) {
