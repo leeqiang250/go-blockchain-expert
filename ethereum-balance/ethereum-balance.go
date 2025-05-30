@@ -50,6 +50,9 @@ func main() {
 				alias:   "谭春花身份证",
 				address: "0x9273350B09A11dEa6b7a3A53CD4e2950605293D1",
 			}, {
+				alias:   "徐兆锋身份证",
+				address: "0x96e5c42CBA4e5A9335b9e99d24B71b213898c8e3",
+			}, {
 				alias:   "李强身份证",
 				address: "0x05A53b212d9538B4C50fE1014204A34f3953f1b9",
 			}, {
