@@ -59,6 +59,9 @@ func main() {
 				alias:   "宋祥秀身份证",
 				address: "0xc4c3F17120B5003a50AE0bb81cd24F46eA66BDB9",
 			}, {
+				alias:   "徐海潮身份证",
+				address: "0xC6b0c9Ad4BdB34153C8EC055a500F90587B0633c",
+			}, {
 				alias:   "李强身份证",
 				address: "0x05A53b212d9538B4C50fE1014204A34f3953f1b9",
 			}, {
